@@ -71,5 +71,11 @@ def two_dna_point_mutants_to_aa(wt_sequence):
                         AA_sequences.add(this_sequence)
     return AA_sequences
 
-
+def calculate_extinction_coeff(aa_sequence):
+    count_Tyr = aa_sequence.count('Y')
+    count_Trp = aa_sequence.count('W')
+    count_Cys = aa_sequence.count('C')
+    cytosolic = 1490*count_Tyr + 5500*count_Trp
+    secreted = 1490*count_Tyr + 5500*count_Trp + 125*count_Cys/2
+    return secreted, cytosolic
 
