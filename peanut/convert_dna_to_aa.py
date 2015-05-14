@@ -9,7 +9,20 @@ def dna_to_aa(sequence):
     sequence (string) DNA sequence
     """
     orig_code = genetic_code(11)
-    return orig_code.translate(sequence).sequence
+    rv_sequence = sequence[::-1]
+
+    translated = []
+    stops = []
+
+    for i in range(3):
+        translated.append(orig_code.translate(sequence).sequence)
+        stops.append(translated[-1].count('*'))
+        translated.append(orig_code.translate(rv_sequence).sequence)
+        stops.append(translated[-1].count('*'))
+        sequence = sequence[1:]
+        rv_sequence = rv_sequence[1:]
+
+    return translated[stops.index(min(stops))]
 
 
 def all_dna_point_mutants_to_aa(wt_sequence):

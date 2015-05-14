@@ -14,7 +14,6 @@ else:
 
 with open(filename, 'r') as fi:
     aa_sequence = fi.readline()
-aa_sequence = aa_sequence[:-1]
 
 secreted, cytosolic = calculate_extinction_coeff(aa_sequence)
 
