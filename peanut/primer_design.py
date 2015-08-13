@@ -30,10 +30,8 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     end_ix = min(len(sequence),(res_num-first_res+5)*3)
 
     wt_codon = DNASequence(sequence[(res_num - first_res)*3:(res_num - first_res)*3+3])
-    print(wt_codon.sequence)
 
     mut_codons = orig_code.synonyms[mut_res]
-    print(mut_codons)
     mut_codon = None
     for codon in mut_codons:
         if wt_codon.distance(DNASequence(codon))*3 == 1:
