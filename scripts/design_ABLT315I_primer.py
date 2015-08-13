@@ -2,7 +2,7 @@
 ########################################
 
 from primer_design import make_single_mutant
-
+#from primer_design import make_mutant
 
 filename = "../nucleotide_sequences/Abl.txt"
 
@@ -23,4 +23,11 @@ print("Forward Primer")
 print(forward_primer)
 print("Reverse Primer")
 print(reverse_primer)
+
+#forward_primer, reverse_primer = make_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
+
+#print("Forward Primer")
+#print(forward_primer)
+#print("Reverse Primer")
+#print(reverse_primer)
 
