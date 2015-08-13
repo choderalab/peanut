@@ -3,6 +3,7 @@ Requires scikit-bio
 https://github.com/biocore/scikit-bio
 """
 from skbio.sequence import genetic_code
+from skbio.sequence import DNASequence
 
 def dna_to_aa(sequence, try_frames=False):
     """
@@ -14,20 +15,11 @@ def dna_to_aa(sequence, try_frames=False):
     if not try_frames:
         return orig_code.translate(sequence).sequence
 
-    rv_sequence = sequence[::-1]
+    sequence = DNASequence(sequence)
+    translated = orig_code.translate_six_frames(sequence)
+    stops = [aastring.sequence.count('*') for aastring in translated]
 
-    translated = []
-    stops = []
-
-    for i in range(3):
-        translated.append(orig_code.translate(sequence).sequence)
-        stops.append(translated[-1].count('*'))
-        translated.append(orig_code.translate(rv_sequence).sequence)
-        stops.append(translated[-1].count('*'))
-        sequence = sequence[1:]
-        rv_sequence = rv_sequence[1:]
-
-    return translated[stops.index(min(stops))]
+    return translated[stops.index(min(stops))].sequence
 
 
 def all_dna_point_mutants_to_aa(wt_sequence):
