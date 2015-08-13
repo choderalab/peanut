@@ -3,6 +3,7 @@ Requires scikit-bio
 https://github.com/biocore/scikit-bio
 """
 from skbio.sequence import genetic_code
+from skbio.sequence import DNASequence
 
 def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     """
@@ -47,8 +48,10 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
         raise IOError("Cannot make desired mutant with a single base change")
     
     forward_primer = sequence[start_ix:(res_num - first_res)*3]+mut_codon+sequence[(res_num+1 - first_res)*3:end_ix]
-    # HOW TO MAKE REVERSE PRIMER
     
-    reverse_primer = "PLACEHOLDER" # PLACEHOLDER
+    forward_sequence = DNASequence(forward_primer)
+    reverse_sequence = forward_sequence.rc()
+    
+    reverse_primer = reverse_sequence.sequence
 
     return forward_primer, reverse_primer
