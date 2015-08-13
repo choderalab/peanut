@@ -13,4 +13,7 @@ Current uses:
 
 --    Calculate total resultant mutant protein space from single or double nucleotide mutations
 
---    Calculate extinction coefficient of a protein
+--    Calculate extinction coefficient and molecular weight of a protein
+
+--    Design forward and reverse primers for desired site-directed mutagenesis
+
