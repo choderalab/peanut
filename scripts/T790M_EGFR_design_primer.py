@@ -4,12 +4,12 @@
 from primer_design import make_single_mutant
 #from primer_design import make_mutant
 
-filename = "../nucleotide_sequences/Abl.txt"
+filename = "../nucleotide_sequences/EGFR.txt"
 
 wt_residue = "T"
-residue_number = 315
-mut_residue = "I"
-first_residue = 242
+residue_number = 790
+mut_residue = "M"
+first_residue = 712
 
 #######################################
 
