@@ -10,7 +10,7 @@ def check_melting_temp(primer_sequence, start_ix, end_ix, length_sequence):
     gc_percent = float(primer_sequence.count('g') + primer_sequence.count('c')) / N * 100.0
     mismatch_percent = 1.000 / N * 100.0
     melting_temp = 81.5 + 0.41*gc_percent - 675.0/N - mismatch_percent
-    if melting_temp < 78.0:
+    if melting_temp < 78.0 or end_ix - start_ix < 25:
         if start_ix > 0:
             start_ix +=-1
         if end_ix <length_sequence-1:
@@ -90,8 +90,8 @@ def make_mutant(wt_codon, mut_codons):
     mut_codons = [DNASequence(codon) for codon in mut_codons]
     distances = [wt_codon.distance(codon) for codon in mut_codons]
 
-    changed_bp = min(distances)*3
-    print("This mutant required "+changed_bp+"bp modifications\n")
+    changed_bp = int(min(distances)*3)
+    print("This mutant required "+str(changed_bp)+"bp modifications\n")
     # choose the codon that requires fewest changes
     return mut_codons[distances.index(min(distances))].sequence
 
