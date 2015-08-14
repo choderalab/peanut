@@ -14,10 +14,11 @@ else:
 
 with open(filename, 'r') as fi:
     aa_sequence = fi.readline()
+print(aa_sequence)
 
 secreted, cytosolic = calculate_extinction_coeff(aa_sequence)
 
-#print(AA_sequences)
+print("")
 print("Extinction Coefficient (Secreted Protein)")
 print(secreted)
 print("Extinction Coefficient (Cytosolic Protein)")
@@ -28,7 +29,7 @@ print(" ")
 print("Molecular Weight (g/mol)")
 print(molecular_weight)
 
-absorbance = calculate_absorbance(aa_sequence)
+absorbance = calculate_absorbance(aa_sequence, secreted=secreted, molecular_weight=molecular_weight)
 print(" ")
 print("Absorbance")
 print(absorbance)

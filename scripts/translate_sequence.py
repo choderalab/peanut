@@ -19,7 +19,7 @@ sequence = sequence[:-1]
 
 AA_sequence = dna_to_aa(sequence)
 
-if filename.find('../nucleotide_sequences/') != -1:
+if filename.find('/') != -1:
     filename = filename.split('/')[-1]
 
 namebits = filename.split('.')
