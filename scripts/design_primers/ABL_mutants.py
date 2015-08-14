@@ -4,7 +4,6 @@
 ########################################
 import os.path
 from primer_design import make_single_mutant
-#from primer_design import make_mutant
 import sys
 
 filename = "../../nucleotide_sequences/Abl.txt"
@@ -28,7 +27,7 @@ print("Forward Primer")
 print(forward_primer)
 print("Reverse Primer")
 print(reverse_primer)
-print("Length of primer: "+str(len(forward_primer))+"bp")
+print("\nLength of primer: "+str(len(forward_primer))+"bp\n")
 
 outfilename = "../../primers/"+wt_residue+str(residue_number)+mut_residue+"_"+filename.split('/')[-1]
 if not os.path.exists(outfilename):
@@ -40,10 +39,4 @@ if not os.path.exists(outfilename):
 else:
     print("\nPrimer file exists; not overwritten\n")
 
-#forward_primer, reverse_primer = make_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
-
-#print("Forward Primer")
-#print(forward_primer)
-#print("Reverse Primer")
-#print(reverse_primer)
 
