@@ -1,4 +1,4 @@
 Forward Primer
-accgtgcagctcatcatgcagctcatgccc
+cgtgcagctcatcatgcagctcatgccct
 Reverse Primer
-gggcatgagctgcatgatgagctgcacggt
+agggcatgagctgcatgatgagctgcacg

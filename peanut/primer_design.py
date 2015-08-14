@@ -9,13 +9,17 @@ def check_melting_temp(primer_sequence):
     N = len(primer_sequence)
     gc_percent = float(primer_sequence.count('g') + primer_sequence.count('c')) / N * 100.0
     mismatch_percent = 1.000 / N * 100.0
-    melting_temp = 81.5 + 0.41*gc_percent - 675/N - mismatch_percent
+    melting_temp = 81.5 + 0.41*gc_percent - 675.0/N - mismatch_percent
     if melting_temp < 78.0:
         return False
     else:
+        # should be actively dealing with this; for now just giving notification
+        if primer_sequence[0] not in ['g','c'] or primer_sequence[-1] not in ['g','c']:
+            print("Primer sequence should optimally terminate in one or more C or G bases.")
         if gc_percent < 40.0 or gc_percent > 60.0:
             print("GC out of range!")
             print(str(gc_percent)+"% GC")
+        print("Melting temp: "+str(melting_temp)+"C")
         return True
 
 def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):

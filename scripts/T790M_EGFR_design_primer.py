@@ -23,6 +23,8 @@ print("Forward Primer")
 print(forward_primer)
 print("Reverse Primer")
 print(reverse_primer)
+print("Length of primer: "+str(len(forward_primer))+"bp")
+
 
 outfilename = "../primers/"+wt_residue+str(residue_number)+mut_residue+"_"+filename.split('/')[-1]
 if not os.path.exists(outfilename):
