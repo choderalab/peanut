@@ -5,6 +5,13 @@ https://github.com/biocore/scikit-bio
 from skbio.sequence import genetic_code
 from skbio.sequence import DNASequence
 
+def check_melting_temp(primer_sequence):
+    N = len(primer_sequence)
+    gc_percent = (primer_sequence.count('g') + primer_sequence.count('c')) / N * 100
+    mismatch_percent = 1 / N * 100
+    melting_temp = 81.5 + 0.41*gc_percent - 675/N - mismatch_percent
+    print(melting_temp)
+
 def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     """
     sequence (string) DNA sequence
@@ -42,6 +49,8 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     
     forward_primer = sequence[start_ix:(res_num - first_res)*3]+mut_codon+sequence[(res_num+1 - first_res)*3:end_ix]
     forward_primer = forward_primer.lower()
+
+    check_melting_temp(forward_primer)
     
     forward_sequence = DNASequence(forward_primer)
     reverse_sequence = forward_sequence.rc()
