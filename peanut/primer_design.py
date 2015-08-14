@@ -16,7 +16,7 @@ def check_melting_temp(primer_sequence):
         # should be actively dealing with this; for now just giving notification
         if primer_sequence[0] not in ['g','c'] or primer_sequence[-1] not in ['g','c']:
             print("Primer sequence should optimally terminate in one or more C or G bases.")
-        if gc_percent < 40.0 or gc_percent > 60.0:
+        if gc_percent < 40.0:
             print("GC out of range!")
             print(str(gc_percent)+"% GC")
         print("Melting temp: "+str(melting_temp)+"C")
@@ -56,7 +56,7 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
         raise IOError("Cannot make desired mutant with a single base change")
 
     good_melting_temp = False
-    surrounding_bases = 12
+    surrounding_bases = 11
     while not good_melting_temp:
         start_ix = max(0,(res_num-first_res)*3-surrounding_bases)
         end_ix = min(len(sequence),(res_num+1-first_res)*3+surrounding_bases)
