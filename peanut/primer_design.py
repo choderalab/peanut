@@ -8,14 +8,15 @@ from skbio.sequence import DNASequence
 def check_melting_temp(primer_sequence):
     N = len(primer_sequence)
     gc_percent = float(primer_sequence.count('g') + primer_sequence.count('c')) / N * 100.0
-    if gc_percent < 40.0 or gc_percent > 60.0:
-        print("GC out of range!")
-        print(str(gc_percent)+"% GC")
     mismatch_percent = 1.000 / N * 100.0
     melting_temp = 81.5 + 0.41*gc_percent - 675/N - mismatch_percent
     if melting_temp < 78.0:
-        print("Melting temp too low!")
-    print(melting_temp)
+        return False
+    else:
+        if gc_percent < 40.0 or gc_percent > 60.0:
+            print("GC out of range!")
+            print(str(gc_percent)+"% GC")
+        return True
 
 def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     """
@@ -38,8 +39,6 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
     if not str(wt_res) == aa_sequence[res_num-first_res]:
         raise IOError("Desired residue not found -- check wildtype residue name and id, and first residue id")
     # start of codon of residue of interest is at (res_num - first_res)*3
-    start_ix = max(0,(res_num-first_res-5)*3)
-    end_ix = min(len(sequence),(res_num-first_res+5)*3)
 
     wt_codon = DNASequence(sequence[(res_num - first_res)*3:(res_num - first_res)*3+3])
 
@@ -51,11 +50,19 @@ def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
 
     if not mut_codon:
         raise IOError("Cannot make desired mutant with a single base change")
-    
-    forward_primer = sequence[start_ix:(res_num - first_res)*3]+mut_codon+sequence[(res_num+1 - first_res)*3:end_ix]
-    forward_primer = forward_primer.lower()
 
-    check_melting_temp(forward_primer)
+    good_melting_temp = False
+    surrounding_bases = 12
+    while not good_melting_temp:
+        start_ix = max(0,(res_num-first_res)*3-surrounding_bases)
+        end_ix = min(len(sequence),(res_num+1-first_res)*3+surrounding_bases)
+        if end_ix - start_ix > 45:
+            print("Acceptable melting temp was not found")
+            break
+        forward_primer = sequence[start_ix:(res_num - first_res)*3]+mut_codon+sequence[(res_num+1 - first_res)*3:end_ix]
+        forward_primer = forward_primer.lower()
+        good_melting_temp = check_melting_temp(forward_primer)
+        surrounding_bases+=1
     
     forward_sequence = DNASequence(forward_primer)
     reverse_sequence = forward_sequence.rc()
