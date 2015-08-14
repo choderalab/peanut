@@ -7,9 +7,14 @@ from skbio.sequence import DNASequence
 
 def check_melting_temp(primer_sequence):
     N = len(primer_sequence)
-    gc_percent = (primer_sequence.count('g') + primer_sequence.count('c')) / N * 100
-    mismatch_percent = 1 / N * 100
+    gc_percent = float(primer_sequence.count('g') + primer_sequence.count('c')) / N * 100.0
+    if gc_percent < 40.0 or gc_percent > 60.0:
+        print("GC out of range!")
+        print(str(gc_percent)+"% GC")
+    mismatch_percent = 1.000 / N * 100.0
     melting_temp = 81.5 + 0.41*gc_percent - 675/N - mismatch_percent
+    if melting_temp < 78.0:
+        print("Melting temp too low!")
     print(melting_temp)
 
 def make_single_mutant(sequence,wt_res,res_num,mut_res,first_res=1):
