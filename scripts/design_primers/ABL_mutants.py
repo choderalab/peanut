@@ -1,14 +1,19 @@
 ########################################
+# Run this script: python ABL_mutants.py X###X
+# where X###X is the desired point mutation
 ########################################
 import os.path
 from primer_design import make_single_mutant
 #from primer_design import make_mutant
+import sys
 
 filename = "../../nucleotide_sequences/Abl.txt"
 
-wt_residue = "E"
-residue_number = 255
-mut_residue = "K"
+mutant = sys.argv[1]
+print("\nMutant to create: "+mutant+"\n")
+wt_residue = mutant[0]
+residue_number = int(mutant[1:-1])
+mut_residue = mutant[-1]
 first_residue = 242
 
 #######################################
@@ -32,6 +37,8 @@ if not os.path.exists(outfilename):
         fo.write(forward_primer)
         fo.write("\nReverse Primer\n")
         fo.write(reverse_primer)
+else:
+    print("\nPrimer file exists; not overwritten\n")
 
 #forward_primer, reverse_primer = make_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
 
