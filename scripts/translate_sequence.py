@@ -19,9 +19,11 @@ sequence = sequence[:-1]
 
 AA_sequence = dna_to_aa(sequence)
 
+if filename.find('/') != -1:
+    filename = filename.split('/')[-1]
+
 namebits = filename.split('.')
-# this isn't going to work right with directories... oops
-outfilename = namebits[0]+"_TRANSLATED."+namebits[1]
+outfilename = "../aminoacid_sequences/"+namebits[0]+"_TRANSLATED."+namebits[1]
 with open(outfilename, 'w') as fo:
     fo.write(AA_sequence)
 print(AA_sequence)

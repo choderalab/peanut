@@ -10,7 +10,7 @@ import sys
 if len(sys.argv) == 2:
     filename = sys.argv[1]#"1_YopH_orf.txt"
 else:
-    raise IOError("command to run script: python count_mutants.py filename_wildtype_sequence")
+    raise IOError("command to run script: python count_single_mutants.py filename_wildtype_sequence")
 
 with open(filename, 'r') as fi:
     wt_sequence = fi.readline()

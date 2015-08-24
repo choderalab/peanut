@@ -1,0 +1,4 @@
+Forward Primer
+cctggagaagaaaaacgtcatccacagagatcttg
+Reverse Primer
+caagatctctgtggatgacgtttttcttctccagg

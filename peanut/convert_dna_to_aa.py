@@ -3,18 +3,29 @@ Requires scikit-bio
 https://github.com/biocore/scikit-bio
 """
 from skbio.sequence import genetic_code
+from skbio.sequence import DNASequence
 
-def dna_to_aa(sequence):
+def dna_to_aa(sequence, try_frames=False):
     """
     sequence (string) DNA sequence
+    will search for correct reading frame
     """
     orig_code = genetic_code(11)
-    return orig_code.translate(sequence).sequence
+
+    if not try_frames:
+        return orig_code.translate(sequence).sequence
+
+    sequence = DNASequence(sequence)
+    translated = orig_code.translate_six_frames(sequence)
+    stops = [aastring.sequence.count('*') for aastring in translated]
+
+    return translated[stops.index(min(stops))].sequence
 
 
 def all_dna_point_mutants_to_aa(wt_sequence):
     """
     wt_sequence (string) DNA sequence
+    assumes starting from correct reading frame
     """
     AA_sequences = set()
     orig_code = genetic_code(11)
@@ -31,7 +42,7 @@ def all_dna_point_mutants_to_aa(wt_sequence):
             if k == len(wt_sequence):
                 this_dna_string = ""+wt_sequence[0:k]+mutant
             this_sequence = orig_code.translate(this_dna_string).sequence
-            if '*' in this_sequence:
+            if '*' in this_sequence[:-1]:
                 continue
             else:
                 AA_sequences.add(this_sequence)
@@ -41,6 +52,7 @@ def all_dna_point_mutants_to_aa(wt_sequence):
 def two_dna_point_mutants_to_aa(wt_sequence):
     """
     wt_sequence (string) DNA sequence
+    assumes starting from correct reading frame
     """
     AA_sequences = set()
     orig_code = genetic_code(11)
@@ -65,7 +77,7 @@ def two_dna_point_mutants_to_aa(wt_sequence):
                     if k1 == len(wt_sequence)-1:
                         this_dna_string = ""+wt_sequence[0:k1]+mutant1+mutant2
                     this_sequence = orig_code.translate(this_dna_string).sequence
-                    if '*' in this_sequence:
+                    if '*' in this_sequence[:-1]:
                         continue
                     else:
                         AA_sequences.add(this_sequence)
