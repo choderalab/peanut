@@ -21,7 +21,9 @@ with open(filename, 'r') as fi:
     wt_sequence = fi.readline()
 wt_sequence = wt_sequence[:-1]
 
-forward_primer, reverse_primer = primer_design.make_single_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
+
+SRC_primer_generator = primer_design.PrimerGenerator(wt_sequence, first_res=first_residue)
+forward_primer, reverse_primer = SRC_primer_generator.make_single_mutant(wt_residue, residue_number, mut_residue)
 
 print("Forward Primer")
 print(forward_primer)
