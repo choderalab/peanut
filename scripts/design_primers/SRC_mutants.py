@@ -3,7 +3,7 @@
 # where X###X is the desired point mutation
 ########################################
 import os
-from peanut import primer_design
+from peanut.primer_design import PrimerGenerator
 import sys
 
 filename = "../../nucleotide_sequences/SRC.txt"
@@ -22,7 +22,7 @@ with open(filename, 'r') as fi:
 wt_sequence = wt_sequence[:-1]
 
 
-SRC_primer_generator = primer_design.PrimerGenerator(wt_sequence, first_res=first_residue)
+SRC_primer_generator = PrimerGenerator(wt_sequence, first_res=first_residue)
 forward_primer, reverse_primer = SRC_primer_generator.make_single_mutant(wt_residue, residue_number, mut_residue)
 
 print("Forward Primer")

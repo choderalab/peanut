@@ -5,6 +5,22 @@ https://github.com/biocore/scikit-bio
 from skbio.sequence import genetic_code
 from skbio.sequence import DNASequence
 
+class SequenceConverter(object):
+    def __init__(self, wt_dna_sequence):
+        self.wt_dna_sequence = wt_dna_sequence
+
+    def dna_to_aa(self, try_frames=False):
+        aa_sequence = dna_to_aa(self.wt_dna_sequence, try_frames=try_frames)
+        return aa_sequence
+    
+    def all_dna_point_mutants_to_aa(self):
+        aa_sequences = all_dna_point_mutants_to_aa(self.wt_dna_sequence)
+        return aa_sequences
+
+    def two_dna_point_mutants_to_aa(self):
+        aa_sequences = two_dna_point_mutants_to_aa(self.wt_dna_sequence)
+        return aa_sequences
+
 def dna_to_aa(sequence, try_frames=False):
     """
     sequence (string) DNA sequence
