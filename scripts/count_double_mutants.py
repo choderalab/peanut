@@ -3,7 +3,7 @@
 # python count_mutants.py filename_wildtype_sequence 
 ########################################
 
-from convert_dna_to_aa import two_dna_point_mutants_to_aa
+from peanut.convert_dna_to_aa import two_dna_point_mutants_to_aa
 import sys
 
 # read from file

@@ -4,7 +4,7 @@
 ########################################
 
 
-from convert_dna_to_aa import dna_to_aa
+from peanut.convert_dna_to_aa import dna_to_aa
 import sys
 
 # read from file

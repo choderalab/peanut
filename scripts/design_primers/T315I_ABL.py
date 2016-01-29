@@ -1,7 +1,7 @@
 ########################################
 ########################################
 import os.path
-from primer_design import make_single_mutant
+from peanut.primer_design import make_single_mutant
 
 filename = "../../nucleotide_sequences/Abl.txt"
 

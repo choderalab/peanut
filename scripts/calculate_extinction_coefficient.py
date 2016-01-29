@@ -3,7 +3,7 @@
 # python calculate_extinction_coefficient.py filename_wildtype_sequence 
 ########################################
 
-from calculate_protein_constants import calculate_extinction_coeff
+from peanut.calculate_protein_constants import calculate_extinction_coeff
 import sys
 
 # read from file

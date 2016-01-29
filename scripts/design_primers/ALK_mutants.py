@@ -1,14 +1,19 @@
 ########################################
+# Run this script: python ALK_mutants.py X###X
+# where X###X is the desired point mutation
 ########################################
 import os.path
 from peanut.primer_design import make_single_mutant
+import sys
 
-filename = "../../nucleotide_sequences/EGFR.txt"
+filename = "../../nucleotide_sequences/ALK.txt"
 
-wt_residue = "T"
-residue_number = 790
-mut_residue = "M"
-first_residue = 712
+mutant = sys.argv[1]
+print("\nMutant to create: "+mutant+"\n")
+wt_residue = mutant[0]
+residue_number = int(mutant[1:-1])
+mut_residue = mutant[-1]
+first_residue = 1116
 
 #######################################
 
@@ -22,8 +27,7 @@ print("Forward Primer")
 print(forward_primer)
 print("Reverse Primer")
 print(reverse_primer)
-print("Length of primer: "+str(len(forward_primer))+"bp")
-
+print("\nLength of primer: "+str(len(forward_primer))+"bp\n")
 
 outfilename = "../../primers/"+wt_residue+str(residue_number)+mut_residue+"_"+filename.split('/')[-1]
 if not os.path.exists(outfilename):
@@ -32,4 +36,7 @@ if not os.path.exists(outfilename):
         fo.write(forward_primer)
         fo.write("\nReverse Primer\n")
         fo.write(reverse_primer)
+else:
+    print("\nPrimer file exists; not overwritten\n")
+
 

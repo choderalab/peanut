@@ -3,7 +3,7 @@
 # where X###X is the desired point mutation
 ########################################
 import os.path
-from primer_design import make_single_mutant
+from peanut.primer_design import make_single_mutant
 import sys
 
 filename = "../../nucleotide_sequences/Abl.txt"

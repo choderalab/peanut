@@ -2,8 +2,8 @@
 # Run this script: python SRC_mutants.py X###X
 # where X###X is the desired point mutation
 ########################################
-import os.path
-from primer_design import make_single_mutant
+import os
+from peanut import primer_design
 import sys
 
 filename = "../../nucleotide_sequences/SRC.txt"
@@ -21,7 +21,7 @@ with open(filename, 'r') as fi:
     wt_sequence = fi.readline()
 wt_sequence = wt_sequence[:-1]
 
-forward_primer, reverse_primer = make_single_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
+forward_primer, reverse_primer = primer_design.make_single_mutant(wt_sequence, wt_residue, residue_number, mut_residue, first_res=first_residue)
 
 print("Forward Primer")
 print(forward_primer)
