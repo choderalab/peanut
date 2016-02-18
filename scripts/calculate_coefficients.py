@@ -3,7 +3,7 @@
 # python calculate_coefficients.py filename_aa_sequence 
 ########################################
 
-from calculate_protein_constants import calculate_extinction_coeff, calculate_molecular_weight, calculate_absorbance
+from peanut.calculate_protein_constants import calculate_extinction_coeff, calculate_molecular_weight, calculate_absorbance
 import sys
 
 # read from file

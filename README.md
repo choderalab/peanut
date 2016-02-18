@@ -8,12 +8,9 @@ Little tools for converting from a DNA / RNA sequence to amino acid sequence
 
 
 Current uses:
+* Determine amino acid sequence from DNA sequencing data for single protein (saves a new file with the amino acid sequence, and also prints it out just for funsies)
+* Calculate total resultant mutant protein space from single or double nucleotide mutations
+* Calculate extinction coefficient and molecular weight of a protein
+* Design forward and reverse primers for desired site-directed mutagenesis
 
---    Determine amino acid sequence from DNA sequencing data for single protein (saves a new file with the amino acid sequence, and also prints it out just for funsies)
-
---    Calculate total resultant mutant protein space from single or double nucleotide mutations
-
---    Calculate extinction coefficient and molecular weight of a protein
-
---    Design forward and reverse primers for desired site-directed mutagenesis
 

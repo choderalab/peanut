@@ -1,14 +1,118 @@
 """
-Requires scikit-bio
-https://github.com/biocore/scikit-bio
+Converts DNA nucleotide sequences to amino acid sequences
+Methods can be used within a SequenceConverter instance, which saves the input
+DNA sequence (can be used if multiple translations will be performed) or 
+externally by directly inputing a DNA sequence
+
+Dependencies:
+    Requires scikit-bio
+        https://github.com/biocore/scikit-bio
 """
 from skbio.sequence import genetic_code
 from skbio.sequence import DNASequence
 
+class SequenceConverter(object):
+    """
+    Attributes:
+        self.wt_dna_sequence : string
+            DNA nucleotide sequence
+            saved unmodified from sequence input to instantiation
+        self.aa_sequence : string
+            amino acid sequence, as found by translating self.wt_dna_sequence
+    Methods:
+        dna_to_aa()
+            translates from the input DNA nucleotide sequence to amino acid sequence
+            saves self.aa_sequence
+        all_dna_point_mutants_to_aa()
+            finds unique amino acid sequences that can be achieved by making a single
+            nucleotide mutation and translating the new nucleotide sequence to amino
+            acid sequence
+            returns set of strings
+        two_dna_point_mutants_to_aa()
+            finds unique amino acid sequences that can be achieved by making 2 nucleotide
+            mutations and translating the new nucleotide sequence to amino acid sequence
+            runs using nesting loops through every nucleotide in the sequence twice : VERY SLOW
+            returns set of strings
+    """
+    def __init__(self, wt_dna_sequence):
+        """
+        Arguments:
+        ----------
+            wt_dna_sequence : str
+               DNA nucleotide sequence
+        """
+        self.wt_dna_sequence = wt_dna_sequence
+
+    def dna_to_aa(self, try_frames=False):
+        """
+        Translates from the input DNA nucleotide sequence to amino acid sequence
+
+        Arguments:
+        ----------
+            Optional:
+            ---------
+                try_frames : Bool
+                    if True, tries 6 possible reading frames, translates all to amino
+                    acids and chooses sequence with fewest stop codons
+                    default = False
+        Returns:
+        --------
+            aa_sequence : str
+                sequence of one-letter amino acid codes
+        """
+        aa_sequence = dna_to_aa(self.wt_dna_sequence, try_frames=try_frames)
+        self.aa_sequence = aa_sequence
+        return aa_sequence
+    
+    def all_dna_point_mutants_to_aa(self):
+        """
+        Finds all potential sequences which can be achieved by making a single nucleotide
+        mutation and translating to amino acid sequence
+        Ignores mutations that lead to nonsense instead of missense mutations
+        Assumes self.wt_dna_sequence starts on the correct reading frame
+        
+        Returns:
+        --------
+            aa_sequences : set of str
+                each str is a unique sequence of one-letter amino acid codes
+        """
+        aa_sequences = all_dna_point_mutants_to_aa(self.wt_dna_sequence)
+        return aa_sequences
+
+    def two_dna_point_mutants_to_aa(self):
+        """
+        Finds all potential sequences which can be achieved by making 2 nucleotide
+        mutations and translating to amino acid sequence
+        Ignores mutations that lead to nonsense instead of missense mutations
+        Assumes self.wt_dna_sequence starts on the correct reading frame
+        
+        Returns:
+        --------
+            aa_sequences : set of str
+                each str is a unique sequence of one-letter amino acid codes
+        """
+
+        aa_sequences = two_dna_point_mutants_to_aa(self.wt_dna_sequence)
+        return aa_sequences
+
 def dna_to_aa(sequence, try_frames=False):
     """
-    sequence (string) DNA sequence
-    will search for correct reading frame
+    Translates from the input DNA nucleotide sequence to amino acid sequence
+
+    Arguments:
+    ----------
+        sequence : str
+            DNA nucleotide sequence
+        Optional:
+        ---------
+            try_frames : Bool
+                if True, tries 6 possible reading frames, translates all to amino
+                acids and chooses sequence with fewest stop codons
+                default = False
+    Returns:
+    --------
+        aa_sequence : str
+            sequence of one-letter amino acid codes
     """
     orig_code = genetic_code(11)
 
@@ -24,8 +128,19 @@ def dna_to_aa(sequence, try_frames=False):
 
 def all_dna_point_mutants_to_aa(wt_sequence):
     """
-    wt_sequence (string) DNA sequence
-    assumes starting from correct reading frame
+    Finds all potential sequences which can be achieved by making a single nucleotide
+    mutation and translating to amino acid sequence
+    Ignores mutations that lead to nonsense instead of missense mutations
+    Assumes wt_sequence starts on the correct reading frame
+        
+    Arguments:
+    ----------
+        wt_sequence : str
+            DNA nucleotide sequence
+    Returns:
+    --------
+        AA_sequences : set of str
+            each str is a unique sequence of one-letter amino acid codes
     """
     AA_sequences = set()
     orig_code = genetic_code(11)
@@ -51,8 +166,22 @@ def all_dna_point_mutants_to_aa(wt_sequence):
 
 def two_dna_point_mutants_to_aa(wt_sequence):
     """
-    wt_sequence (string) DNA sequence
-    assumes starting from correct reading frame
+    Finds all potential sequences which can be achieved by making 2 nucleotide
+    mutations and translating to amino acid sequence
+    Ignores mutations that lead to nonsense instead of missense mutations
+    Assumes wt_sequence starts on the correct reading frame
+        
+    Makes double mutants via nested loops through each nucleotide in the sequence twice,
+    is therefore VERY SLOW
+
+    Arguments:
+    ----------
+        wt_sequence : str
+            DNA nucleotide sequence
+    Returns:
+    --------
+        AA_sequences : set of str
+            each str is a unique sequence of one-letter amino acid codes
     """
     AA_sequences = set()
     orig_code = genetic_code(11)
